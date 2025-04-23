@@ -1,4 +1,7 @@
 
+using api.RealTime;
+using System.Text.Json.Serialization;
+
 namespace api
 {
     public class Program
@@ -7,29 +10,47 @@ namespace api
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            // Add services to the container.
-
+            //APPLICATION CONTROLLERS
             builder.Services.AddControllers();
-            // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
+            builder.Services.AddSignalR()
+                .AddJsonProtocol(options =>
+                {
+                    options.PayloadSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
+                    options.PayloadSerializerOptions.MaxDepth = 64; // Optional: Increase max depth if needed
+                });
+
+            //APPLICATION CORS CONFIGURATION
+            builder.Services.AddCors(options =>
+            {
+                options.AddPolicy("AllowNextApp", corsBuilder =>
+                {
+                    corsBuilder
+                        .WithOrigins("http://localhost:3000")
+                        .AllowAnyMethod()
+                        .AllowAnyHeader()
+                        .AllowCredentials();
+                });
+            });
+
             var app = builder.Build();
 
-            // Configure the HTTP request pipeline.
+            //CONFIGURE HTTP SWAGGER ENVIRONMENT
             if (app.Environment.IsDevelopment())
             {
                 app.UseSwagger();
                 app.UseSwaggerUI();
             }
 
+            //ADD APPLICATION SERVICES
+            app.UseWebSockets();
+            app.UseCors("AllowNextApp");
+            app.MapHub<ChatHub>("/chatHub").RequireCors("AllowNextApp");
             app.UseHttpsRedirection();
-
             app.UseAuthorization();
-
-
             app.MapControllers();
-
             app.Run();
         }
     }
