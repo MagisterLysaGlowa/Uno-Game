@@ -1,0 +1,98 @@
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
+﻿################################################################################
+# Ten plik .gitignore został utworzony automatycznie przez Microsoft(R) Visual Studio.
+################################################################################
+
+/car-panel-api/car-panel-api/car-panel-api.csproj
+
+# Ignore build outputs
+bin/
+obj/
+
+# User-specific files
+*.user
+*.vspscc
+*.vssscc
+.vscode/
+.vs/
+
+# Log files
+*.log
+
+# ASP.NET temporary files
+# Ignore the temp files created during runtime
+App_Data/
+App_logs/
+tmp/
+
+# Package directories
+# Uncomment if you have node_modules or other package directories
+node_modules/
+
+# IDE-specific files
+.DS_Store
+Thumbs.db
+
+# Configurations
+# Ignore configuration files that might contain sensitive data
+appsettings.Development.json
+appsettings.Production.json
+
+# Resharper artifacts
+_ReSharper*/
+*.DotSettings.user
+
+# Azure Functions
+local.settings.json
+
+# NuGet
+*.nupkg
+*.snupkg
+project.lock.json
+project.fragment.lock.json
+artifacts/
+
+# Publish outputs
+wwwroot/
+publish/
+
+# dependencies
+/node_modules
+/.pnp
+.pnp.*
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/versions
+
+# testing
+/coverage
+
+# next.js
+/.next/
+/out/
+
+# production
+/build
+
+# misc
+.DS_Store
+*.pem
+
+# debug
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+
+# env files (can opt-in for committing if needed)
+.env*
+
+# vercel
+.vercel
+
+# typescript
+*.tsbuildinfo
+next-env.d.ts
